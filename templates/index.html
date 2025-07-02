@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automated Dubbing fro Indian Regional Languages</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --dark-bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.5);
+      --text-light: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .navbar {
+      background-color: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem 2rem;
+    }
+    
+    .navbar-brand {
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: var(--text-light);
+    }
+    
+    .main-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .upload-card {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-title {
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-light);
+    }
+    
+    .card-description {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text-light);
+    }
+    
+    .form-control {
+      background-color: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      padding: 0.75rem 1rem;
+    }
+    
+    .form-control:focus {
+      background-color: rgba(15, 23, 42, 0.9);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
+      color: var(--text-light);
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .progress {
+      height: 8px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin-top: 1.5rem;
+      display: none;
+    }
+    
+    .progress-bar {
+      background-color: var(--primary-color);
+      transition: width 0.4s ease;
+    }
+    
+    .formats-container {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .formats-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    
+    .format-badge {
+      background-color: rgba(37, 99, 235, 0.2);
+      color: var(--primary-color);
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer {
+      background-color: rgba(15, 23, 42, 0.8);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Automated Video Dubbing for Indian Regional Languages</a>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <div class="container">
+      <div class="upload-card">
+        <h1 class="card-title">Upload Video for Dubbing</h1>
+        <p class="card-description">
+          Upload your video file to automatically generate dubbed versions in multiple languages. 
+          Our system supports high-quality voice synthesis and precise lip-sync technology.
+        </p>
+        
+        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="file" class="form-label">Select Video File</label>
+            <input type="file" class="form-control" id="file" name="file" accept=".mp4,.avi,.mov" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary w-100">Process Video</button>
+          
+          <div class="progress" id="progressContainer">
+            <div class="progress-bar" id="progressBar" role="progressbar"></div>
+          </div>
+        </form>
+        
+        <div class="formats-container">
+          <div class="formats-title">Supported Formats</div>
+          <div>
+            <span class="format-badge">MP4</span>
+            <span class="format-badge">AVI</span>
+            <span class="format-badge">MOV</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Developed by Abdul Moiz & Faizaan Ahmed</p>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+
+    form.addEventListener('submit', function () {
+      progressContainer.style.display = 'block';
+      let percent = 0;
+      const interval = setInterval(() => {
+        if (percent >= 100) {
+          clearInterval(interval);
+        } else {
+          percent += 1;
+          progressBar.style.width = percent + '%';
+          progressBar.setAttribute('aria-valuenow', percent);
+        }
+      }, 60);
+    });
+
+    document.getElementById('file').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const fileSize = file.size / 1024 / 1024;
+        const maxSize = 500;
+
+        if (fileSize > maxSize) {
+          alert('File size exceeds maximum limit of 500MB.');
+          this.value = '';
+          return;
+        }
+
+        const allowedTypes = ['video/mp4', 'video/avi', 'video/quicktime'];
+        if (!allowedTypes.includes(file.type)) {
+          alert('Please select a valid video file (MP4, AVI, or MOV).');
+          this.value = '';
+          return;
+        }
+      }
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

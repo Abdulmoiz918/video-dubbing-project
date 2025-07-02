@@ -1,0 +1,7 @@
+# Ignore all video files
+*.mp4
+
+# Ignore folders containing media
+downloads/
+uploads/
+
